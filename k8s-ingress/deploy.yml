@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timeserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      pod: timeserver-pod
+  template:
+    metadata:
+      labels:
+        pod: timeserver-pod
+    spec:
+      containers:
+        - name: timeserver-container
+          # SPRING WEB API THAT EXPOSES /actuator ON PORT 8080
+          image: ker10epere/spring-actuator:0.0.1
+          env:
+            # OVERRIDE CONTEXT_PATH FOR TESTING PURPOSES
+            - name: server.servlet.context-path
+              value: /test
