@@ -1,20 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: webserver-ingress
+  name: actuator-ingress
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /test/$2
+    nginx.ingress.kubernetes.io/rewrite-target: /spring-actuator/$2
 spec:
   rules:
     - http:
         paths:
-          # ANOTHER PathType FOR PathPrefix TO REMOVE REGEX WARNINGS
           - pathType: ImplementationSpecific
-            path: /demo(/|$)(.*)
+            path: /test(/|$)(.*)
             backend:
               service:
-                # TARGETS THE SERVICE BY METADATA NAME
-                name: webserver-svc
+                name: actuator-svc
                 port:
-                  number: 8080
+                  name: http-web-svc

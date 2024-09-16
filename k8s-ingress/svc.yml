@@ -1,11 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: webserver-svc
+  name: actuator-svc
 spec:
-  type: ClusterIP
   selector:
-    # SELECTS PODS BY LABEL
-    pod: timeserver-pod
+    pod: actuator-pod
   ports:
     - port: 8080
+      name: http-web-svc

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deployment
+spec:
+  selector:
+    matchLabels:
+      pod: tomcat-pod
+  replicas: 1
+  template:
+    metadata:
+      name: tomcat-pod
+      labels:
+        pod: tomcat-pod
+    spec:
+      containers:
+        - name: tomcat
+          image: tomcat:9.0.94-jdk8-corretto-al2
+          ports:
+            - containerPort: 8080
+              name: http-web-svc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-svc
+spec:
+  selector:
+    pod: tomcat-pod
+  ports:
+    - name: http-web-svc
+      protocol: TCP
+      port: 8080
+      targetPort: http-web-svc
